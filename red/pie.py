@@ -48,6 +48,17 @@ class Redis():
         self.sock.sendall(comm.constructMessage("SET", [key,value]))
         return self.handleResponse()
 
+    def setex(self,key,seconds,value):           
+        """ Set the string value of a key. If key already holds its 
+            value, its overwritten, regardless of its type
+            
+            @return: Status code reply. 
+            Always OK
+        """
+        self.connect()
+        self.sock.sendall(comm.constructMessage("SETEX", [key,seconds,value]))
+        return self.handleResponse()
+
     def get(self, key):
         """ Get the value of a key. If the key does not exist, the special 
             value nil is returned. 
